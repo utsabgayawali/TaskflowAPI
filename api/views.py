@@ -38,21 +38,17 @@ class TaskView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class RegisterView(generics.CreateAPIView):
-
     serializer_class = RegisterSerializer
 
     def create(self, request, *args, **kwargs):
-
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
-
             return Response(
                 {"message": "Registration successful"},
                 status=status.HTTP_201_CREATED
             )
-
         return Response(
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
@@ -63,12 +59,11 @@ class RegisterView(generics.CreateAPIView):
 
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
-    def post(self, request):
 
+    def post(self, request):
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
-
             username = serializer.validated_data['username']
             password = serializer.validated_data['password']
 
@@ -78,9 +73,7 @@ class LoginView(generics.GenericAPIView):
             )
 
             if user is not None:
-
                 login(request, user)
-
                 return Response(
                     {"message": "Login successful"},
                     status=status.HTTP_200_OK
